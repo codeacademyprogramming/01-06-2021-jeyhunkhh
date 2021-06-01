@@ -9,6 +9,7 @@ export const City: FC<{ city: IWeatherData; tempValue(temp: number): string,
         <button
           className="btn btn-outline-secondary me-3"
           type="button"
+          data-testid="city-test-delete"
           onClick={() => deleteCity(city.id)}
         >
           -

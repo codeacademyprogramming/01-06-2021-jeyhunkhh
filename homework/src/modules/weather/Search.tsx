@@ -29,6 +29,7 @@ export const Search: FC<{
         onChange={handleInputChange}
         onKeyUp={onAddSerch}
         value={searchValue}
+        data-testid="add-search"
         className="form-control mb-2"
         placeholder="Search city"
         id="search"

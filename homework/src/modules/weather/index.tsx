@@ -10,7 +10,6 @@ export interface IWeatherData {
     temp: number;
   };
   name: string;
-  temp: number;
 }
 
 export const WeatherMap = () => {
