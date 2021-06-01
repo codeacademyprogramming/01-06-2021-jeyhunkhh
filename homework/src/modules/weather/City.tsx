@@ -1,14 +1,15 @@
 import { FC } from "react";
 import { IWeatherData } from "./index";
 
-export const City: FC<{ city: IWeatherData; tempValue(temp: number): string }> =
-  ({ city, tempValue }) => {
+export const City: FC<{ city: IWeatherData; tempValue(temp: number): string, 
+    deleteCity(id: number) : void}> =
+  ({ city, tempValue, deleteCity }) => {
     return (
       <li className="d-flex align-items-center my-3">
         <button
           className="btn btn-outline-secondary me-3"
           type="button"
-          // onClick={() => deleteCity(city.id)}
+          onClick={() => deleteCity(city.id)}
         >
           -
         </button>
