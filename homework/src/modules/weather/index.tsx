@@ -7,10 +7,10 @@ import { City } from "./City";
 export interface IWeatherData {
   id: number;
   main: {
-      temp:number
+    temp: number;
   };
   name: string;
-  temp:number
+  temp: number;
 }
 
 export const WeatherMap = () => {
@@ -24,41 +24,44 @@ export const WeatherMap = () => {
       searchCityName: string
     ) => {
       e.preventDefault();
-      if (e.code === "Enter") {
-        await weatherService
-          .getWeather(searchCityName)
-          .then((res) => {
-            let { data } = res;
-            if (
-              weatherData.every((city) => Number(city.id) !== Number(data.id))
-            ) {
-              setweatherData([...weatherData, data]);
-            } else if (weatherData.length === 0) {
-              setweatherData([...weatherData, data]);
-            }
-          })
-          .catch((err) => {
-            setErrorMessage(err.response.data.message);
-          });
-      }
+      await weatherService
+        .getWeather(searchCityName)
+        .then((res) => {
+          let { data } = res;
+          if (
+            weatherData.every((city) => Number(city.id) !== Number(data.id))
+          ) {
+            setweatherData([...weatherData, data]);
+          } else if (weatherData.length === 0) {
+            setweatherData([...weatherData, data]);
+          }
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data.message);
+        });
     },
     [weatherData]
   );
 
   const tempValue = useCallback(
-    (temp) => {
+    (temp: number) => {
       if (tempType === "Celsius") {
         temp = temp - 273.15;
-        return `${temp > 0 ? "+" : (temp = 0 ? " " : "-")}${temp.toFixed(0)}C`;
+        return `${temp > 0 ? "+" : temp === 0 ? " " : "-"}${temp.toFixed(0)}C`;
       }
       if (tempType === "Fahrenheit") {
         temp = (temp * 9) / 5 - 459.67;
-        return `${temp > 0 ? "+" : (temp = 0 ? " " : "-")}${temp.toFixed(2)}F`;
+        return `${temp > 0 ? "+" : temp === 0 ? " " : "-"}${temp.toFixed(2)}F`;
       }
-      return `${temp > 0 ? "+" : (temp = 0 ? " " : "-")}${temp.toFixed(2)}K`;
+      return `${temp > 0 ? "+" : temp === 0 ? " " : "-"}${temp.toFixed(2)}K`;
     },
     [tempType]
   );
+
+  const changeTempType = useCallback((e) => {
+    setTempType(e.target.value);
+  }, []);
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -69,7 +72,7 @@ export const WeatherMap = () => {
           })}
         </div>
         <div className="col-lg-4">
-          <TempTypeRadio />
+          <TempTypeRadio changeTempType={changeTempType} />
         </div>
       </div>
     </div>

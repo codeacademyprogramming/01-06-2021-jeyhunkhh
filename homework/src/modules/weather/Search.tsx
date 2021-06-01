@@ -8,13 +8,17 @@ export const Search: FC<{
   errorMessage: string;
 }> = ({ handleAdd, errorMessage }) => {
   const [searchValue, setSearchValue] = useState("");
+
   const handleInputChange = useCallback((e) => {
     setSearchValue(e.target.value);
   }, []);
 
   const onAddSerch = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      handleAdd(e, searchValue);
+    async (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.code === "Enter") {
+        await handleAdd(e, searchValue);
+        setSearchValue("")
+      }
     },
     [searchValue, handleAdd]
   );
@@ -24,6 +28,7 @@ export const Search: FC<{
         type="text"
         onChange={handleInputChange}
         onKeyUp={onAddSerch}
+        value={searchValue}
         className="form-control mb-2"
         placeholder="Search city"
         id="search"
