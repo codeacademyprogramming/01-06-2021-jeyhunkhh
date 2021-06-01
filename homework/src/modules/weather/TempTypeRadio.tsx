@@ -1,8 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 
 export const TempTypeRadio: FC<{ changeTempType(e: any): void }> = ({
   changeTempType,
 }) => {
+  const handleClick = useCallback((e) => {
+    changeTempType(e);
+  }, [changeTempType]);
   return (
     <>
       <div className="form-check">
@@ -12,7 +15,7 @@ export const TempTypeRadio: FC<{ changeTempType(e: any): void }> = ({
           name="flexRadioDefault"
           id="flexRadioDefault2"
           value="Kelvin"
-          onClick={changeTempType}
+          onClick={handleClick}
           defaultChecked
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">
@@ -26,7 +29,7 @@ export const TempTypeRadio: FC<{ changeTempType(e: any): void }> = ({
           value="Celsius"
           name="flexRadioDefault"
           id="flexRadioDefault1"
-          onClick={changeTempType}
+          onClick={handleClick}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault1">
           <strong>Celsius</strong>
@@ -39,7 +42,7 @@ export const TempTypeRadio: FC<{ changeTempType(e: any): void }> = ({
           value="Fahrenheit"
           name="flexRadioDefault"
           id="flexRadioDefault3"
-          onClick={changeTempType}
+          onClick={handleClick}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault3">
           <strong>Fahrenheit</strong>

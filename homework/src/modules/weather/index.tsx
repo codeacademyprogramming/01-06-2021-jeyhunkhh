@@ -24,6 +24,7 @@ export const WeatherMap = () => {
       searchCityName: string
     ) => {
       e.preventDefault();
+      setErrorMessage("");
       await weatherService
         .getWeather(searchCityName)
         .then((res) => {
@@ -63,7 +64,7 @@ export const WeatherMap = () => {
   }, []);
 
   const deleteCity = useCallback(
-    (id:number) => {
+    (id: number) => {
       setweatherData(weatherData.filter((city) => city.id !== id));
     },
     [weatherData]
@@ -75,7 +76,14 @@ export const WeatherMap = () => {
         <div className="col-lg-8">
           <Search handleAdd={handleAdd} errorMessage={errorMessage} />
           {weatherData.map((city) => {
-            return <City key={city.id} deleteCity={deleteCity} tempValue={tempValue} city={city} />;
+            return (
+              <City
+                key={city.id}
+                deleteCity={deleteCity}
+                tempValue={tempValue}
+                city={city}
+              />
+            );
           })}
         </div>
         <div className="col-lg-4">
